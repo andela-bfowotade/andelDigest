@@ -1,0 +1,27 @@
+section#splash-blue
+  .row
+    .col.s12.center-align
+      h1.white-text.main-bg-text
+        | The knowledge based platform
+        br
+        | for Andela developers
+      h6.main-text Code what matters most.
+      a#start-now-hero.btn.waves-effect.waves-light.yellow.darken-2.btn-2-yellow(href='https://editor.stamplay.com/register?utm_source=stamplay&utm_content=hero_section&utm_medium=website')
+        span.dark-grey-text start now
+.row#side-nav
+  .col.s12.m3.l3.z-depth-2
+    h1
+      | Featured
+    md-subheader.md-no-sticky 3 line item, long paragraph (see on mobile)
+    md-list-item.md-3-line(data-ng-repeat='todo in todos')
+      img.md-avatar.circle.responsive-img(ng-src='{{todo.face}}?25', alt='{{todo.who}}')
+      .md-list-item-text
+        h3 {{ todo.who }}
+        p
+          | Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
+
+  .col.s12.m9.l9
+    #main-interlude-white.interlude
+    h3 Write less code. Build products faster.
+    h6.grey-text
+      | Focus on creating unique & engaging apps. We take care of everything else your app needs.
