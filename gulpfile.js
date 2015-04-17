@@ -16,14 +16,15 @@ var browserify = require('browserify'),
     stringify = require('stringify'),
     watchify = require('watchify'),
     mocha = require('gulp-mocha'),
-    exit = require('gulp-exit');
-    browserSync = require('browser-sync');
+    exit = require('gulp-exit'),
+    browserSync = require('browser-sync'),
+    rimraf = require('gulp-rimraf');
 
 var paths = {
   public: 'public/**',
   jade: 'app/**/*.jade',
   styles: 'app/styles/*.+(less|css)',
-  scripts: 'app/**/*.js',
+  scripts: ['app/**/*.js'],
   staticFiles: [
     '!app/**/*.+(less|css|js|jade)',
      'app/**/*.*'
@@ -44,6 +45,15 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./public/css'));
 });
 
+gulp.task('browser-sync', ['nodemon'], function() {
+  browserSync.init(null, {
+    proxy: "http://localhost:1337",
+        files: ["./public/**/*.*"],
+        browser: "google chrome",
+        port: 1338,
+  });
+});
+
 gulp.task('static-files',function(){
   return gulp.src(paths.staticFiles)
     .pipe(gulp.dest('public/'));
@@ -61,13 +71,9 @@ gulp.task('nodemon', function () {
     });
 });
 
-gulp.task('browser-sync', ['nodemon'], function() {
-  browserSync.init(null, {
-    proxy: "http://localhost:1337",
-        files: ["./public/**/*.*"],
-        browser: "google chrome",
-        port: 1338,
-  });
+gulp.task('del:scripts', function() {
+  return gulp.src('./public/js/index.js', { read: false }) // much faster 
+    .pipe(rimraf());
 });
 
 gulp.task('scripts', function() {
@@ -76,21 +82,24 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('browserify', function() {
-  var b = browserify();
-  b.add('./app/application.js');
-  return b.bundle()
-  .on('success', gutil.log.bind(gutil, 'Browserify Rebundled'))
-  .on('error', gutil.log.bind(gutil, 'Browserify Error: in browserify gulp task'))
-  .pipe(source('index.js'))
-  .pipe(gulp.dest('./public/js'));
-});
+
+
+// gulp.task('browserify', function() {
+//   var b = browserify();
+//   b.add('./app/application.js');
+//   return b.bundle()
+//   .on('success', gutil.log.bind(gutil, 'Browserify Rebundled'))
+//   .on('error', gutil.log.bind(gutil, 'Browserify Error: in browserify gulp task'))
+//   .pipe(source('index.js'))
+//   .pipe(gulp.dest('./public/js'));
+// });
 
 gulp.task('watch', function() {
   gulp.watch(paths.jade, ['jade']);
   gulp.watch(paths.styles, ['less']);
-  gulp.watch(paths.scripts, ['browserify']);
+  gulp.watch(paths.scripts, ['del:scripts', 'scripts']);
 });
+
 
 gulp.task('bower', function() {
   return bower()
@@ -125,7 +134,7 @@ gulp.task('test:e2e',function(cb) {
   .on('end', cb);
 });
 
-gulp.task('build', ['bower', 'jade','less','browserify','static-files', 'browser-sync']);
+gulp.task('build', ['bower', 'del:scripts', 'scripts', 'jade', 'less', 'static-files', 'browser-sync']);
 gulp.task('production', ['nodemon','build']);
 gulp.task('default', ['nodemon', 'build', 'watch']);
 gulp.task('heroku:production', ['build']);

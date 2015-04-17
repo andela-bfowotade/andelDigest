@@ -2,7 +2,11 @@ angular.module('andelfire.controllers')
 .controller('MainCtrl', ['$scope', 'Authentication', '$state',
   function($scope, Authentication, $state) {
     $scope.login = function() {
-      Authentication.login(function(err, authData){});
+      Authentication.login(function(err, authData){
+        if(authData){
+          $state.go('default');
+        }
+      });
     };
 
     $scope.logout = function() {

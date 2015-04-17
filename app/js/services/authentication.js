@@ -35,7 +35,6 @@ angular.module('andelfire.services')
               // save the current user in the global scope
               $rootScope.currentUser = user;
               // navigate to home page
-              $state.go('default');
               console.log(user);
             }
             else {
@@ -46,7 +45,7 @@ angular.module('andelfire.services')
               // save the current user in the global scope
               $rootScope.currentUser = user;
               // navigate to home page
-              $state.go('default');
+              $state.go('landingPage');
             }
 
             // ...and we're done

@@ -4,25 +4,11 @@ angular.module('andelfire.filters', []);
 angular.module('andelfire.directives', ['monospaced.elastic']);
 angular.module('andelfire.controllers', []);
 
-/* load services */
-require('./js/services/authentication.js');
-require('./js/services/refs.js');
-require('./js/services/toast.js');
-require('./js/services/users.js');
-
-/* load filters */
-require('./js/filters/reverse.js');
-
-/* load directives */
-
-/* load controllers */
-require('./js/controllers/home.js');
-require('./js/controllers/login.js');
-require('./js/controllers/menu.js');
-require('./js/controllers/users.js');
-
 window.AndelFire = angular.module("AndelFire", [
   'ui.router',
+  'markdown',
+  'ngSanitize',
+  'btford.markdown',
   'andelfire.controllers',
   'andelfire.directives',
   'andelfire.filters',
@@ -36,7 +22,7 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
     $rootScope._ = window._;
     $rootScope.moment = window.moment;
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, error) {
-      var states = (toState.name !== 'about' && toState.name !== 'landingPage' && toState.name !== 'questions' && toState.name !== 'public_questions' && toState.name !== 'error_404');
+      var states = (toState.name !== 'about' && toState.name !== 'landingPage' &&  toState.name !== 'error_404');
         console.log(toState.name);
       if (!Refs.root.getAuth() && states && !$location.search().token) {
         event.preventDefault();
@@ -57,7 +43,6 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
     };
 
     Refs.root.onAuth($rootScope.authCallback);
-    console.log('over here');
   }
 ]);
 
@@ -81,6 +66,11 @@ AndelFire.config(['$stateProvider', '$locationProvider',
         url: '/home',
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
+      })
+      .state('kbarticle', {
+        url: '/kbarticle',
+        templateUrl: 'views/kbarticle.html',
+        controller:'KbCtrl'
       })
       .state('users', {
         url: '/users',
