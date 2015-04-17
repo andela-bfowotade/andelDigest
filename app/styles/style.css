@@ -49,7 +49,11 @@ nav ul a {
 .mdi-navigation-menu {
   color: #000000;
 }
+
 ul.right.hide-on-med-and-down {
   cursor: pointer;
 }
 
+.ace_editor {
+  height: 200px;
+}
