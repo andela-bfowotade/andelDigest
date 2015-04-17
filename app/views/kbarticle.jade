@@ -15,10 +15,10 @@ section
           .row
             .input-field.col.s12
               label(for='textarea1') Textarea
-              textarea#textarea1.validate.materialize-textarea(ng-minlength="20" name="kbArticleTextbox" ng-model='markdown' required)
+              textarea#textarea1.validate.materialize-textarea(ng-minlength="10" name="kbArticleTextbox" ng-model='markdown' required)
               div(style="color:red" ng-show="articleForm.kbArticleTextbox.$dirty && articleForm.kbArticleTextbox.$invalid")
                 div(ng-show="articleForm.kbArticleTextbox.$error.required") This is required.
-                p(ng-show="articleForm.kbArticleTextbox.$error.minlength") Text should be more than 20 characters.
+                p(ng-show="articleForm.kbArticleTextbox.$error.minlength") Text should be more than 10 characters before preview can be seen.
                 //- div(ng-message='md-maxlength') The name has to be less than 30 characters long.
               a#start-now-hero.btn.waves-effect.waves-light.yellow.darken-2.btn-2-yellow(ng-disabled="articleForm.$invalid" ng-click='SaveKbArticle()')
                 span.dark-grey-text Submit Guide
