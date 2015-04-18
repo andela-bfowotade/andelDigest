@@ -19,5 +19,7 @@ angular.module('andelfire.controllers')
           Toast($scope.selectedUser.name + ' updated successfully');
         });
       };
+      $scope.fruitNames = ['Apple', 'Banana', 'Orange'];
+      
     }
   ]);

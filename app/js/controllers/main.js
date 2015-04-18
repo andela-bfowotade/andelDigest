@@ -1,10 +1,14 @@
 angular.module('andelfire.controllers')
-.controller('MainCtrl', ['$scope', 'Authentication', '$state',
-  function($scope, Authentication, $state) {
+.controller('MainCtrl', ['$scope', 'Authentication', 'Refs', '$state', '$rootScope', '$timeout',
+  function($scope, Authentication, Refs, $state, $rootScope, $timeout) {
+    $rootScope.currentUser = Refs.root.getAuth();
     $scope.login = function() {
       Authentication.login(function(err, authData){
         if(authData){
           $state.go('default');
+          $timeout(function() {
+            $rootScope.currentUser = Refs.root.getAuth();
+          });
         }
       });
     };

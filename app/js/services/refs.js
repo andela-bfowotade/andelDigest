@@ -7,6 +7,7 @@ angular.module('andelfire.services')
       return {
         root: rootRef,
         users: rootRef.child('users'),
+        kbAs: rootRef.child('articles')
       };
     }
   ]);

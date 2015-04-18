@@ -39,7 +39,7 @@ nav ul a {
 .page-footer {
   background-color: #414B82 !important;
   min-height: 200px;
-  padding-top: 30px;
+  padding-top: 30px !important;
 }
 
 .btn-2-yellow {
@@ -54,6 +54,9 @@ ul.right.hide-on-med-and-down {
   cursor: pointer;
 }
 
-.ace_editor {
-  height: 200px;
+.markdown-col {
+  border-left: 1px solid #bababa;
+}
+.rem-list {
+  cursor: pointer;
 }

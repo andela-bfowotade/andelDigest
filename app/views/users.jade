@@ -6,6 +6,7 @@ md-content(flex="25")
   md-content.md-padding
     md-content.md-padding
       md-text-float(ng-model="search.name" label="Start typing name")
+      md-chips(ng-model="myItems" placeholder="Add an item" readonly="isReadOnly")
     md-list
       md-item(ng-repeat="user in users | orderBy:'name' | filter:search")
         a(ui-sref="users/id({userId:user.$id})")
