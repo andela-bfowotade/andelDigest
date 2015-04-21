@@ -1,5 +1,4 @@
-var browserify = require('browserify'),
-    bower = require('gulp-bower'),
+var bower = require('gulp-bower'),
     concat = require('gulp-concat'),
     karma = require('karma').server,
     gulp = require('gulp'),
@@ -81,18 +80,6 @@ gulp.task('scripts', function() {
     .pipe(concat('index.js'))
     .pipe(gulp.dest('./public/js'));
 });
-
-
-
-// gulp.task('browserify', function() {
-//   var b = browserify();
-//   b.add('./app/application.js');
-//   return b.bundle()
-//   .on('success', gutil.log.bind(gutil, 'Browserify Rebundled'))
-//   .on('error', gutil.log.bind(gutil, 'Browserify Error: in browserify gulp task'))
-//   .pipe(source('index.js'))
-//   .pipe(gulp.dest('./public/js'));
-// });
 
 gulp.task('watch', function() {
   gulp.watch(paths.jade, ['jade']);

@@ -21,7 +21,9 @@ module.exports = function (app, rootRef) {
           result.push(user);
           cb();
         }, function(err) {
-          if(err) return res.status(500).json(err);
+          if(err) {
+            return res.status(500).json(err);
+          }
           res.status(200).json(result);
         });
       }

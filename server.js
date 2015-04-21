@@ -2,13 +2,13 @@ global._ = require('lodash');
 global.t = require('moment');
 
 var cookieParser = require('cookie-parser'),
-    env = process.env.NODE_ENV || 'development',
-    config = require('./config/config')[env],
-    express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser'),
-    firebaseAuth = require('./lib/firebase/auth'),
-    routes = require('./routes');
+  env = process.env.NODE_ENV || 'development',
+  config = require('./config/config')[env],
+  express = require('express'),
+  app = express(),
+  bodyParser = require('body-parser'),
+  firebaseAuth = require('./lib/firebase/auth'),
+  routes = require('./routes');
 
 function run(appdir, rootRef) {
 
@@ -17,9 +17,11 @@ function run(appdir, rootRef) {
   app.dir = appdir;
 
   // things to do on each request
-  app.use(function (req, res, next) {
+  app.use(function(req, res, next) {
     // log each request in development environment
-    if(env !== 'production') console.log(t().format('HH:MM'), req.method, req.url, req.socket.bytesRead); 
+    if (env !== 'production') {
+      console.log(t().format('HH:MM'), req.method, req.url, req.socket.bytesRead);
+    }
     // tell the client what firebase to use
     res.cookie('rootRef', rootRef.toString());
 
@@ -30,7 +32,7 @@ function run(appdir, rootRef) {
   app.use(express.static(app.dir + '/public'));
 
   // Standard error handling
-  app.use(function(err, req, res, next){
+  app.use(function(err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
   });

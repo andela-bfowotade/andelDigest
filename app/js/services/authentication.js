@@ -5,7 +5,9 @@ angular.module('andelfire.services')
         login: function(cb) {
           var options = { remember: true, scope: "email" };
           Refs.root.authWithOAuthPopup("google", function(error, authData) {
-            if(cb) cb(error, authData);
+            if(cb) {
+              cb(error, authData);
+            }
           }, options);
         },
 
