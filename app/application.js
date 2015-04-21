@@ -10,12 +10,13 @@ window.AndelFire = angular.module("AndelFire", [
   'ngSanitize',
   'toastr',
   'oitozero.ngSweetAlert',
+  'angularUtils.directives.dirPagination',
   'andelfire.controllers',
   'andelfire.directives',
   'andelfire.filters',
   'andelfire.services',
   'ngAnimate',
-  'ngMaterial'
+  'ngMaterial',
 ]);
 
 AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$location',
@@ -24,7 +25,6 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
     $rootScope.moment = window.moment;
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, error) {
       var states = (toState.name !== 'about' && toState.name !== 'landingPage' &&  toState.name !== 'error_404');
-        console.log(toState.name);
       if (!Refs.root.getAuth() && states && !$location.search().token) {
         event.preventDefault();
         $state.go('error_404');
@@ -73,6 +73,16 @@ AndelFire.config(['$stateProvider', '$locationProvider',
         templateUrl: 'views/kbarticle.html',
         controller:'KbCtrl'
       })
+      .state('kbarticle/id', {
+        url: '/kbarticle/:kbId',
+        templateUrl: 'views/singlearticle.html',
+        controller:'KbCtrl'
+      })
+      .state('kbarticle/edit/id', {
+        url: '/kbarticle/edit/:kbId',
+        templateUrl: 'views/kbarticle.html',
+        controller:'KbCtrl'
+      })
       .state('users', {
         url: '/users',
         templateUrl: 'views/users.html',
@@ -82,6 +92,10 @@ AndelFire.config(['$stateProvider', '$locationProvider',
         url: '/users/:userId',
         templateUrl: 'views/users.html',
         controller: 'UsersCtrl'
+      })
+      .state('error_404', {
+        url: '/error_404',
+        templateUrl: '404.html'
       });
   }
 ]);

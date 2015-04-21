@@ -1,0 +1,41 @@
+section(data-ng-controller='KbCtrl')
+  md-toolbar.md-warn
+    .md-toolbar-tools
+      h2.md-flex {{singleData.title}}
+  md-content(layout-padding='', style='height: 600px;padding: 24px;')
+    .row
+      .col.s12.m3.l3.singlepage-ref-link
+        p.ref-subheader
+          |  References
+        ul
+          li(data-ng-repeat='reference in singleData.referenceUrls')
+            a(href='reference.refUrl') {{reference.refUrl || 'No References'}}
+            hr
+      .col.s12.s9.l9.m9.content-row
+        markdown.prettyprint(markdown-model='singleData.story')
+  .row.center.home-info
+    .col.s12.m4.l4
+      .center.promo
+        i.large.mdi-action-face-unlock
+        p.promo-caption Contributors
+        p.light.center(ng-if='!singleData.contributor')
+          | No Contributors Yet.
+        a(href='kbarticle/edit/{{singleData.push_key}}') Click here to contribute
+    .col.s12.m4.l4
+      .center.promo
+        i.large.mdi-action-find-replace.home-icons
+        p.promo-caption Search Randomly
+        p.light.center
+          | We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
+    .col.s12.m4.l4
+      .center.promo
+        i.large.mdi-action-group-work.home-icons
+        p.promo-caption Connect with other developers
+        p.light.center
+          | Now most times you may not have people around to perform UAT for your new project, but we have helped create a platform where you can add your projects and developers or regular people would constructively criticism or praise your project.
+  .row
+    .container
+      #disqus_thread
+      noscript
+        | Please enable JavaScript to view the 
+        a(href="https://disqus.com/?ref_noscript" rel ="nofollow") comments powered by Disqus.

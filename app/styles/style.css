@@ -38,7 +38,6 @@ nav ul a {
 
 .page-footer {
   background-color: #414B82 !important;
-  min-height: 200px;
   padding-top: 30px !important;
 }
 
@@ -59,4 +58,46 @@ ul.right.hide-on-med-and-down {
 }
 .rem-list {
   cursor: pointer;
+}
+
+.img-center-align {
+  margin: 0 auto;
+}
+
+.404-text {
+  text-align: center;
+  font-size: 300;
+}
+
+.form-mkd {
+  border: 1px solid #bababa;
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 5px;
+  background: #F5F5F5;
+}
+
+.td-ref {
+  padding: 15px 0;
+}
+.td-link, .singlepage-ref-link {
+  word-break: break-all;
+}
+.ref-subheader {
+  font-size: 30px;
+  text-decoration: underline;
+}
+
+.circle {
+  margin: 0 auto;
+}
+
+.content-row {
+  padding-top: 30px;
+  background-color: #F1F1F1;
+  border-radius: 5px;
+}
+
+pre code {
+  color: #673AB7;
 }

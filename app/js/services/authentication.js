@@ -11,7 +11,7 @@ angular.module('andelfire.services')
 
         logout: function() {
           Refs.root.unauth();
-          $rootScope.currentUser = null;
+          $rootScope.activeUser = null;
         },
 
         auth: function(authData, cb) {
@@ -33,9 +33,7 @@ angular.module('andelfire.services')
                 userRef.update({access_token: authData.token});
               }
               // save the current user in the global scope
-              $rootScope.currentUser = user;
-              // navigate to home page
-              console.log(user);
+              $rootScope.activeUser = user;
             }
             else {
               // construct the user record the way we want it
@@ -43,7 +41,7 @@ angular.module('andelfire.services')
               // save it to firebase collection of users
               userRef.set(user);
               // save the current user in the global scope
-              $rootScope.currentUser = user;
+              $rootScope.activeUser = user;
               // navigate to home page
               $state.go('landingPage');
             }

@@ -10,12 +10,24 @@ section
     a(href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' target='_blank') Markdown Cheat Sheet
   .row
     .col.s12.m6.l6
-      .row
+      .row.form-mkd
         form.col.s12(name='articleForm' ng-submit="submitForm(articleForm.$valid)" novalidate)
           .row
             .input-field.col.s12
+              label(for='title') Title
+              input#title.validate(type='text', data-ng-model='article.title', name='title', required, ng-minlength='5')
+              div(style="color:red" ng-show="articleForm.title.$dirty && articleForm.title.$invalid")
+                div(ng-show="articleForm.title.$error.required") This is required.
+                p(ng-show="articleForm.title.$error.minlength") Text should be more than 5 characters..input-field.col.s12
+            .input-field.col.s12
+              label(for='subtitle') Very Short Summary
+              input#subtitle.validate(type='text', data-ng-model='article.subtitle', name='subtitle', required, ng-minlength='5')
+              div(style="color:red" ng-show="articleForm.subtitle.$dirty && articleForm.subtitle.$invalid")
+                div(ng-show="articleForm.subtitle.$error.required") This is required.
+                p(ng-show="articleForm.subtitle.$error.minlength") Text should be more than 5 characters.
+            .input-field.col.s12
               label(for='textarea1') Textarea
-              textarea#textarea1.validate.materialize-textarea(ng-minlength="10" name="kbArticleTextbox" ng-model='markdown' required)
+              textarea#textarea1.validate.materialize-textarea.textareaInput(ng-minlength="10" name="kbArticleTextbox" ng-model='article.story' required)
               div(style="color:red" ng-show="articleForm.kbArticleTextbox.$dirty && articleForm.kbArticleTextbox.$invalid")
                 div(ng-show="articleForm.kbArticleTextbox.$error.required") This is required.
                 p(ng-show="articleForm.kbArticleTextbox.$error.minlength") Text should be more than 10 characters before preview can be seen.
@@ -23,24 +35,25 @@ section
               small  In this format please --> http://example.com
             .input-field.col.s6.ref-field
               label(for='reference') Reference Links(if any)
-              input#reference.validate.ref-input(type='url' name='refName' ng-model='refInput')
+              input#reference.validate.ref-input(type='url' name='refName' ng-model='ref_Url')
               div.btn-plus-red
-                a.btn-floating.btn-large.waves-effect.waves-light.red(ng-show='refInput.length')
-                  i.mdi-content-add.ref-plus(ng-click='newRefUrl(refInput)')
+                a.btn-floating.btn-large.waves-effect.waves-light.red(ng-show='article.referenceUrls.length || ref_Url')
+                  i.mdi-content-add.ref-plus(ng-click='newRefUrl()')
+                p(ng-show='article.referenceUrls.length || ref_Url') click the reb button to add the url.
             .input-field.col.s6
-              table.striped.reponsive-table(ng-show='pushReference.length')
+              table.striped.reponsive-table(ng-show='article.referenceUrls.length')
                 thead
                   tr
                     th(data-field='id') References
-                tbody
-                  tr(data-ng-repeat='url in pushReference')
-                    td 
-                      a(href="{{url.refUrl}}" target='_blank') {{url.refUrl}}
+                tbody 
+                  tr(data-ng-repeat='url in article.referenceUrls track by $index')
+                    td.td-ref
+                      a.td-link(href="{{url.refUrl}}" target='_blank') {{url.refUrl}}
                       i.mdi-content-remove-circle.right.rem-list(data-ng-click='toggleList($index)', alt='delete', title='delete')
                       i.mdi-maps-local-library.left
-          a#start-now-hero.btn.waves-effect.waves-light.yellow.darken-2.btn-2-yellow(ng-disabled="articleForm.$invalid" ng-click='SaveKbArticle()')
+          a#start-now-hero.btn.waves-effect.waves-light.yellow.darken-2.btn-2-yellow(ng-disabled="articleForm.$invalid" ng-click='SaveKbArticle(article)')
             span.dark-grey-text Submit Guide
     .col.s12.m6.l6.markdown-col
-      markdown.prettyprint(markdown-model='markdown')
+      markdown.prettyprint(markdown-model='article.story')
   .row
     .container

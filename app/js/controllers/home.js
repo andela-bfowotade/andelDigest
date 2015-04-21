@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
 .controller('HomeCtrl',
-  ['$scope', '$state', '$mdBottomSheet', 'Authentication',
+  ['$scope', '$state', '$mdBottomSheet', 'Authentication', 
     function($scope, $state, $mdBottomSheet, Authentication) {
 
       $scope.showMenu = function($event) {
@@ -12,6 +12,8 @@ angular.module('andelfire.controllers')
           $state.go(clickedItem.state);
         });
       };
+
+      
 
     }
  ]);
