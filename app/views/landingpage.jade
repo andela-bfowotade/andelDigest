@@ -18,13 +18,11 @@ section#splash-blue
         h3 {{ todo.who }}
         p
           | Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
-
   .col.s12.m9.l9
     #main-interlude-white.interlude
     h3 Write less code. Build products faster.
     h6.grey-text
       | Focus on creating unique & engaging apps. We take care of everything else your app needs.
-    a.btn.tooltipped(data-position="top" data-delay="50" data-tooltip="I am tooltip") Hover me!
     .preloader-wrapper.big.active
       .spinner-layer.spinner-blue-only
         .circle-clipper.right
@@ -35,13 +33,15 @@ section#splash-blue
         .circle
     ul.collection
       li.collection-item.avatar(dir-paginate='articles in kbarticles | orderBy:"-timestamp" | itemsPerPage: 10')
-        img.circle(ng-src='{{articles.avatar || "http://0.gravatar.com/avatar/"}}', alt='')
+        img.circle(ng-src='{{articles.picture || "http://0.gravatar.com/avatar/"}}', alt='')
         a(ng-href='/kbarticle/{{articles.$id}}')
           span.title {{articles.title}}
         p
           |  {{articles.subtitle || 'The beautiful subtitle hasn\'t been born, but the knowledge is within'}}
           br
           | By {{articles.owner || 'Stranger'}}
-        a.secondary-content(href='#!')
+        p.secondary-content.time-ago
+          | {{articles.timestamp | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
+        a(href='#!')
           i.mdi-action-grade
     dir-pagination-controls(template-url='/lib/angular-utils-pagination/dirPagination.tpl.html')

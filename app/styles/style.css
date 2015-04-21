@@ -1,6 +1,6 @@
 .brand-logo img {
   height: 25px;
-  /*margin-left: 85px;*/
+  margin: 15px 0 0 0;
 }
 
 #splash-blue {
@@ -100,4 +100,8 @@ ul.right.hide-on-med-and-down {
 
 pre code {
   color: #673AB7;
+}
+
+.secondary-content.time-ago {
+  color: #272D4E;
 }

@@ -11,7 +11,6 @@ angular.module('andelfire.controllers')
           });
         });
       };
-      $scope.demo = {};
 
       function is_valid_url(url) {
         return /^(http(s)?:\/\/)?(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url);
@@ -21,16 +20,16 @@ angular.module('andelfire.controllers')
       $scope.spliceRefence = [];
       $scope.newRefUrl = function() {
         if (is_valid_url($scope.ref_Url)) {
-        if($scope.article.referenceUrls) {
-          $scope.article.referenceUrls.push({
-            refUrl: $scope.ref_Url
-          });
-        } else {
-          $scope.pushReference.push({
-            refUrl: $scope.ref_Url
-          });
-          $scope.article.referenceUrls = $scope.pushReference;
-        }
+          if ($scope.article.referenceUrls) {
+            $scope.article.referenceUrls.push({
+              refUrl: $scope.ref_Url
+            });
+          } else {
+            $scope.pushReference.push({
+              refUrl: $scope.ref_Url
+            });
+            $scope.article.referenceUrls = $scope.pushReference;
+          }
           $scope.ref_Url = '';
 
         } else {
@@ -57,16 +56,23 @@ angular.module('andelfire.controllers')
         }
       });
 
+      $scope.last_edited_obj = {
+        by: $rootScope.activeUser.known_as,
+        when: new Date().getTime()
+      }
+
       $scope.SaveKbArticle = function(article) {
         //save article details
         if (!article) {
           $scope.push_key = Refs.kbAs.push(article, function(err) {
             if (!err) {}
           });
-          // save push key
+
           Refs.kbAs.child($scope.push_key.key()).update({
             push_key: $scope.push_key.key(),
             referenceUrls: angular.copy($scope.pushReference),
+            picture: $rootScope.activeUser.picture,
+            last_edited: $scope.last_edited_obj,
             timestamp: new Date().getTime()
           }, function(err) {
             if (!err) {
@@ -87,7 +93,8 @@ angular.module('andelfire.controllers')
           Refs.kbAs.child($stateParams.kbId).update(article, function(err) {
             if (!err) {
               Refs.kbAs.child($stateParams.kbId).update({
-                timestamp: new Date().getTime()
+                timestamp: new Date().getTime(),
+                last_edited: $scope.last_edited_obj
               });
               swal({
                 title: 'Cool!!',

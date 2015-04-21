@@ -8,9 +8,17 @@ section(data-ng-controller='KbCtrl')
         p.ref-subheader
           |  References
         ul
-          li(data-ng-repeat='reference in singleData.referenceUrls')
+          li(data-ng-repeat='reference in singleData.referenceUrls | limitTo: 4')
             a(href='reference.refUrl') {{reference.refUrl || 'No References'}}
             hr
+        p.ref-subheader
+          | Owner: 
+          {{singleData.owner}}
+        img(ng-src='{{singleData.picture || "img/andel-avatar.png"}}')
+        hr
+        p
+          | Last Edited by {{singleData.last_edited.by}}
+        span(am-time-ago='singleData.last_edited.when')
       .col.s12.s9.l9.m9.content-row
         markdown.prettyprint(markdown-model='singleData.story')
   .row.center.home-info
@@ -23,9 +31,9 @@ section(data-ng-controller='KbCtrl')
         a(href='kbarticle/edit/{{singleData.push_key}}') Click here to contribute
     .col.s12.m4.l4
       .center.promo
-        i.large.mdi-action-find-replace.home-icons
-        p.promo-caption Search Randomly
-        p.light.center
+        i.large.mdi-action-grade
+        p.promo-caption Rates
+        p.light.center(data-ng-if='')
           | We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
     .col.s12.m4.l4
       .center.promo

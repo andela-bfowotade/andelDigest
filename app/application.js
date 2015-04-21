@@ -14,6 +14,7 @@ window.AndelFire = angular.module("AndelFire", [
   'andelfire.controllers',
   'andelfire.directives',
   'andelfire.filters',
+  'angularMoment',
   'andelfire.services',
   'ngAnimate',
   'ngMaterial',
