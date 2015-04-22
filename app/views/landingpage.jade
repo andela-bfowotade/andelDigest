@@ -12,8 +12,7 @@ section#splash-blue
   .col.s12.m3.l3.z-depth-2
     h1
       | Featured
-    md-list-item.md-3-line(data-ng-repeat='todo in todos')
-      img.md-avatar.circle.responsive-img(ng-src='{{todo.face}}?25', alt='{{todo.who}}')
+    md-list-item.md-3-line.fx-fade-down.fx-easing-bounce.fx-speed-800(data-ng-repeat='todo in todos')
       .md-list-item-text
         h3 {{ todo.who }}
         p
@@ -31,7 +30,7 @@ section#splash-blue
         .circle
       .circle-clipper.right
         .circle
-    ul.collection
+    ul.collection.grip-list
       li.collection-item.avatar(dir-paginate='articles in kbarticles | orderBy:"-timestamp" | itemsPerPage: 10')
         img.circle(ng-src='{{articles.picture || "http://0.gravatar.com/avatar/"}}', alt='')
         a(ng-href='/kbarticle/{{articles.$id}}')

@@ -6,29 +6,28 @@ html(lang="en" ng-app="AndelFire")
   body(onload="prettyPrint()")
     header
       section(data-ng-controller='MainCtrl')
-        .navbar-fixed
-          nav
-            .nav-wrapper
-              a.brand-logo(href='/')
-                img.brand-logo(src='img/andelalogo.png')
-              a.button-collapse(href='#', data-activates='mobile-demo')
-                i.mdi-navigation-menu
-              ul.right.hide-on-med-and-down
-                li(data-ng-if="!currentUser")
-                  a(data-ng-click='login()') Login
-                li
-                  a(href='/kbarticle') Add KB Article
-                li(data-ng-if="currentUser")
-                  a(data-ng-click='logout()') Logout
-              ul#mobile-demo.side-nav
-                li
-                  a(href='/docs/main') Docs
-                li
-                  a(href='/pricing') Pricing
-                li
-                  a(href='/about') About
-                a#signup-mobile-navbar.waves-effect.waves-stamplay.btn-flat(href='https://editor.stamplay.com/register?utm_source=stamplay&utm_content=navbar_signup&utm_medium=website') sign up
-                a.waves-effect.waves-light.btn.white-text(href='https://editor.stamplay.com/login?utm_source=stamplay&utm_content=navbar_login&utm_medium=website') login
+        nav
+          .nav-wrapper
+            a.brand-logo(href='/')
+              img.brand-logo(src='img/andelalogo.png')
+            a.button-collapse(href='#', data-activates='mobile-demo')
+              i.mdi-navigation-menu
+            ul.right.hide-on-med-and-down
+              li(data-ng-if="!currentUser")
+                a(data-ng-click='login()') Login
+              li
+                a(href='/kbarticle') Add KB Article
+              li(data-ng-if="currentUser")
+                a(data-ng-click='logout()') Logout
+            ul#mobile-demo.side-nav
+              li
+                a(href='/docs/main') Docs
+              li
+                a(href='/pricing') Pricing
+              li
+                a(href='/about') About
+              a#signup-mobile-navbar.waves-effect.waves-stamplay.btn-flat(href='https://editor.stamplay.com/register?utm_source=stamplay&utm_content=navbar_signup&utm_medium=website') sign up
+              a.waves-effect.waves-light.btn.white-text(href='https://editor.stamplay.com/login?utm_source=stamplay&utm_content=navbar_login&utm_medium=website') login
     div(ui-view)
 
     include shared/footer

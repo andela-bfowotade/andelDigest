@@ -1,12 +1,13 @@
 angular.module('andelfire.controllers')
-  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout',
-    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout) {
+  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$location',
+    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $location) {
 
       $scope.articles = KbArticles.all();
       if ($stateParams.kbId) {
         $scope.articles.$loaded().then(function() {
           KbArticles.find($stateParams.kbId, function(data) {
             $scope.singleData = data;
+            $scope.working = false;
             $scope.article = data;
           });
         });
@@ -15,7 +16,7 @@ angular.module('andelfire.controllers')
       function is_valid_url(url) {
         return /^(http(s)?:\/\/)?(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url);
       }
-
+      console.log($rootScope.currentUser);
       $scope.pushReference = [];
       $scope.spliceRefence = [];
       $scope.newRefUrl = function() {
@@ -57,13 +58,13 @@ angular.module('andelfire.controllers')
       });
 
       $scope.last_edited_obj = {
-        by: $rootScope.activeUser.known_as,
+        by: $rootScope.currentUser.google.displayName,
         when: new Date().getTime()
       }
 
       $scope.SaveKbArticle = function(article) {
         //save article details
-        if (!article) {
+        if (!article.push_key) {
           $scope.push_key = Refs.kbAs.push(article, function(err) {
             if (!err) {}
           });
@@ -110,6 +111,59 @@ angular.module('andelfire.controllers')
             }
           });
         };
+      };
+
+      $scope.showDialog = showDialog;
+
+      function showDialog($event) {
+        var parentEl = angular.element(document.body);
+
+        function DialogController(scope, $mdDialog) {
+
+          scope.closeDialog = function() {
+            $mdDialog.hide();
+          }
+        }
+        $mdDialog.show({
+          parent: parentEl,
+          targetEvent: $event,
+          templateUrl: '/views/partials/referencePopup.html',
+          bindToController: true,
+          clickOutsideToClose: true,
+          disableParentScroll: false,
+          controller: DialogController
+        });
+
+      };
+
+      $scope.like_counter = function() {
+        KbArticles.updateLikes({
+          uid: $rootScope.currentUser.uid
+        }, function(err) {
+          if (!err) {
+            toastr.success('Successfully Liked');
+          } else {
+            toastr.error('An error occured sorry');
+          }
+        });
+      };
+
+      KbArticles.getArticleLikes($stateParams.kbId, function(data) {
+        if (data) {
+          _.forEach(data, function(val, key) {
+            $scope.userLikes = val.uid;
+            $scope.likes = _.toArray(data).length;
+          });
+        }
+      });
+      
+      var count = 0;
+      var urlSpy = '/kbarticle/'+$stateParams.kbId;
+      if($location.path() == urlSpy) {
+        count++
+        console.log(count);
+        var url = $location.path();
+        console.log(url);
       };
 
       /* * * CONFIGURATION VARIABLES * * */

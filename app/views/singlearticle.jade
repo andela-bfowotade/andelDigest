@@ -2,15 +2,18 @@ section(data-ng-controller='KbCtrl')
   md-toolbar.md-warn
     .md-toolbar-tools
       h2.md-flex {{singleData.title}}
-  md-content(layout-padding='', style='height: 600px;padding: 24px;')
+  md-content(layout-padding='', style='padding: 24px;')
     .row
       .col.s12.m3.l3.singlepage-ref-link
         p.ref-subheader
           |  References
         ul
-          li(data-ng-repeat='reference in singleData.referenceUrls | limitTo: 4')
-            a(href='reference.refUrl') {{reference.refUrl || 'No References'}}
+          li(data-ng-repeat='reference in singleData.referenceUrls | limitTo: 3')
+            a(ng-href='{{reference.refUrl}}' target='_blank') {{reference.refUrl || 'No References'}}
             hr
+        div(ng-show='singleData.referenceUrls.length > 3')
+          md-button#btn-commends.md-raised.md-primary.md-hue-2(ng-click='showDialog($event)')
+            | View all references ({{singleData.referenceUrls.length}})
         p.ref-subheader
           | Owner: 
           {{singleData.owner}}
@@ -19,7 +22,8 @@ section(data-ng-controller='KbCtrl')
         p
           | Last Edited by {{singleData.last_edited.by}}
         span(am-time-ago='singleData.last_edited.when')
-      .col.s12.s9.l9.m9.content-row
+      .col.s12.s9.l9.m9.content-row(data-ng-init='working = true')
+        div.indeterminate-preloader(loader working="working" message="Loading...")
         markdown.prettyprint(markdown-model='singleData.story')
   .row.center.home-info
     .col.s12.m4.l4
@@ -31,14 +35,20 @@ section(data-ng-controller='KbCtrl')
         a(href='kbarticle/edit/{{singleData.push_key}}') Click here to contribute
     .col.s12.m4.l4
       .center.promo
-        i.large.mdi-action-grade
+        
+        div(data-ng-if='userLikes != currentUser.uid')
+          i.large.mdi-action-grade.mdi-likes(data-ng-click='like_counter()')
+          p Click the star to like this article
+        div(data-ng-if='userLikes == currentUser.uid')
+          i.large.mdi-action-grade(data-ng-style="{'color': 'gold'}")
+          p You have already liked this article
         p.promo-caption Rates
-        p.light.center(data-ng-if='')
-          | We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
+        p.light.center
+          span.display-block {{likes || 0}} Like(s)
     .col.s12.m4.l4
       .center.promo
-        i.large.mdi-action-group-work.home-icons
-        p.promo-caption Connect with other developers
+        i.large.mdi-action-visibility
+        p.promo-caption Number of page Views
         p.light.center
           | Now most times you may not have people around to perform UAT for your new project, but we have helped create a platform where you can add your projects and developers or regular people would constructively criticism or praise your project.
   .row

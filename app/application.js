@@ -15,6 +15,8 @@ window.AndelFire = angular.module("AndelFire", [
   'andelfire.directives',
   'andelfire.filters',
   'angularMoment',
+  'ngLoader',
+  'ngFx',
   'andelfire.services',
   'ngAnimate',
   'ngMaterial',
@@ -25,7 +27,7 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
     $rootScope._ = window._;
     $rootScope.moment = window.moment;
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, error) {
-      var states = (toState.name !== 'about' && toState.name !== 'landingPage' &&  toState.name !== 'error_404');
+      var states = (toState.name !== 'about' && toState.name !== 'landingPage' && toState.name !== 'error_404');
       if (!Refs.root.getAuth() && states && !$location.search().token) {
         event.preventDefault();
         $state.go('error_404');
@@ -34,9 +36,7 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
 
     $rootScope.authCallback = function(authData) {
       Authentication.auth(authData, function(user) {
-        if (user) {
-          Toast('Welcome, ' + user.name + '!');
-        } else {
+        if (user) {} else {
           // logged out
           Authentication.logout();
           $state.go('landingPage');
@@ -72,17 +72,17 @@ AndelFire.config(['$stateProvider', '$locationProvider',
       .state('kbarticle', {
         url: '/kbarticle',
         templateUrl: 'views/kbarticle.html',
-        controller:'KbCtrl'
+        controller: 'KbCtrl'
       })
       .state('kbarticle/id', {
         url: '/kbarticle/:kbId',
         templateUrl: 'views/singlearticle.html',
-        controller:'KbCtrl'
+        controller: 'KbCtrl'
       })
       .state('kbarticle/edit/id', {
         url: '/kbarticle/edit/:kbId',
         templateUrl: 'views/kbarticle.html',
-        controller:'KbCtrl'
+        controller: 'KbCtrl'
       })
       .state('users', {
         url: '/users',

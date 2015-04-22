@@ -1,0 +1,11 @@
+md-dialog.reference-dialog(data-ng-controller='KbCtrl')
+  md-toolbar.md-primary
+    h1.md-toolbar-tools
+      | All references
+  md-content.md-padding
+    ul
+      li(data-ng-repeat='reference in singleData.referenceUrls')
+        a(href='reference.refUrl') {{reference.refUrl || 'No References'}}
+        hr
+    section(layout='row', layout-sm='column', layout-align='center center')
+      md-button.md-raised.reference-modal-btn(ng-click='closeDialog()') Close

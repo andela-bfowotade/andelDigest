@@ -1,12 +1,11 @@
 angular.module('andelfire.services')
-  .factory('KbArticles', ['$firebase', 'Refs',
-    function($firebase, Refs) {
+  .factory('KbArticles', ['$firebase', 'Refs', '$stateParams',
+    function($firebase, Refs, $stateParams) {
       return {
         all: function(cb) {
-          if(!cb) {
+          if (!cb) {
             return $firebase(Refs.kbAs).$asArray();
-          }
-          else {
+          } else {
             Refs.users.once('value', function(snap) {
               cb(snap.val());
             });
@@ -14,15 +13,32 @@ angular.module('andelfire.services')
         },
 
         find: function(uid, cb) {
-          if(!cb) {
+          if (!cb) {
             return $firebase(Refs.kbAs.child(uid)).$asObject();
-          }
-          else {
+          } else {
             Refs.kbAs.child(uid).once('value', function(snap) {
               cb(snap.val());
             });
           }
+        },
+
+        updateLikes: function(getCounts, cb) {
+          Refs.kbAs.child($stateParams.kbId).child('likes').push(getCounts, function(error) {
+            if (error) {
+              cb(error);
+            } else {
+              cb();
+            }
+          });
+        },
+        getArticleLikes: function(kbId, cb) {
+          if(!cb) {
+            return $firebase(Refs.kbAs.child($stateParams.kbId)).$asObject();
+          } else {
+            Refs.kbAs.child($stateParams.kbId).child('likes').on('value', function(snap) {
+              cb(snap.val());
+            });
+          }
         }
-      };
-    }
-  ]);
+      }
+  }]);
