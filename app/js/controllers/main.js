@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('MainCtrl', ['$scope', 'Authentication', 'Refs', '$state', '$rootScope', '$timeout', 'KbArticles',
-    function($scope, Authentication, Refs, $state, $rootScope, $timeout, KbArticles) {
+  .controller('MainCtrl', ['$scope', 'Authentication', 'Refs', '$state', '$rootScope', '$timeout', 'KbArticles', '$location',
+    function($scope, Authentication, Refs, $state, $rootScope, $timeout, KbArticles, $location) {
       $rootScope.currentUser = Refs.root.getAuth();
       $scope.login = function() {
         Authentication.login(function(err, authData) {
@@ -15,6 +15,7 @@ angular.module('andelfire.controllers')
 
       $scope.logout = function() {
         Authentication.logout();
+        $state.go('landingPage', {}, {reload: true});
       };
 
 

@@ -1,11 +1,14 @@
 angular.module('andelfire.services')
-  .factory('Authentication', ['$cookies', '$firebase', '$rootScope','$state', 'Refs', 'Toast',
+  .factory('Authentication', ['$cookies', '$firebase', '$rootScope', '$state', 'Refs', 'Toast',
     function($cookies, $firebase, $rootScope, $state, Refs, Toast) {
       return {
         login: function(cb) {
-          var options = { remember: true, scope: "email" };
+          var options = {
+            remember: true,
+            scope: "email"
+          };
           Refs.root.authWithOAuthPopup("google", function(error, authData) {
-            if(cb) {
+            if (cb) {
               cb(error, authData);
             }
           }, options);
@@ -17,7 +20,7 @@ angular.module('andelfire.services')
         },
 
         auth: function(authData, cb) {
-          if(!authData) {
+          if (!authData) {
             // we're logged out. nothing else to do
             return cb(null);
           }
@@ -29,15 +32,16 @@ angular.module('andelfire.services')
           userRef.once('value', function(snap) {
             var user = snap.val();
 
-            if(user) {
+            if (user) {
               // google user logging in, update their access token
-              if(authData.provider === "google") {
-                userRef.update({access_token: authData.token});
+              if (authData.provider === "google") {
+                userRef.update({
+                  access_token: authData.token
+                });
               }
               // save the current user in the global scope
               $rootScope.activeUser = user;
-            }
-            else {
+            } else {
               // construct the user record the way we want it
               user = self.buildUserObjectFromGoogle(authData);
               // save it to firebase collection of users
