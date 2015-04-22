@@ -31,14 +31,16 @@ angular.module('andelfire.services')
             }
           });
         },
+
         getArticleLikes: function(kbId, cb) {
-          if(!cb) {
+          if (!cb) {
             return $firebase(Refs.kbAs.child($stateParams.kbId)).$asObject();
-          } else {
+          } else if($stateParams.kbId) {
             Refs.kbAs.child($stateParams.kbId).child('likes').on('value', function(snap) {
               cb(snap.val());
             });
           }
         }
       }
-  }]);
+    }
+  ]);

@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$location',
-    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $location) {
+  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$location', '$window',
+    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $location, $window) {
 
       $scope.articles = KbArticles.all();
       if ($stateParams.kbId) {
@@ -16,7 +16,7 @@ angular.module('andelfire.controllers')
       function is_valid_url(url) {
         return /^(http(s)?:\/\/)?(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url);
       }
-      console.log($rootScope.currentUser);
+
       $scope.pushReference = [];
       $scope.spliceRefence = [];
       $scope.newRefUrl = function() {
@@ -71,6 +71,7 @@ angular.module('andelfire.controllers')
 
           Refs.kbAs.child($scope.push_key.key()).update({
             push_key: $scope.push_key.key(),
+            owner: $rootScope.activeUser.known_as,
             referenceUrls: angular.copy($scope.pushReference),
             picture: $rootScope.activeUser.picture,
             last_edited: $scope.last_edited_obj,
@@ -81,7 +82,11 @@ angular.module('andelfire.controllers')
                 title: 'Cool!!',
                 text: 'Knowledge Article has been created. Thank you',
                 type: 'success',
-              });
+              },
+
+            function() {
+              $window.location = '/kbarticle/' + $scope.push_key.key();
+            });
             } else {
               swal({
                 title: 'OOPS!!',
@@ -151,20 +156,11 @@ angular.module('andelfire.controllers')
       KbArticles.getArticleLikes($stateParams.kbId, function(data) {
         if (data) {
           _.forEach(data, function(val, key) {
-            $scope.userLikes = val.uid;
-            $scope.likes = _.toArray(data).length;
+            $scope.val = val.uid;
+            $scope.length_val = _.toArray(data).length;
           });
         }
       });
-      
-      var count = 0;
-      var urlSpy = '/kbarticle/'+$stateParams.kbId;
-      if($location.path() == urlSpy) {
-        count++
-        console.log(count);
-        var url = $location.path();
-        console.log(url);
-      };
 
       /* * * CONFIGURATION VARIABLES * * */
       var disqus_shortname = 'andeldigest';

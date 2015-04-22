@@ -11,6 +11,8 @@ section(data-ng-controller='KbCtrl')
           li(data-ng-repeat='reference in singleData.referenceUrls | limitTo: 3')
             a(ng-href='{{reference.refUrl}}' target='_blank') {{reference.refUrl || 'No References'}}
             hr
+        div(data-ng-show='!singleData.referenceUrls.length')
+          | No references
         div(ng-show='singleData.referenceUrls.length > 3')
           md-button#btn-commends.md-raised.md-primary.md-hue-2(ng-click='showDialog($event)')
             | View all references ({{singleData.referenceUrls.length}})
@@ -26,32 +28,22 @@ section(data-ng-controller='KbCtrl')
         div.indeterminate-preloader(loader working="working" message="Loading...")
         markdown.prettyprint(markdown-model='singleData.story')
   .row.center.home-info
-    .col.s12.m4.l4
+    .col.s12.m6.l6
       .center.promo
         i.large.mdi-action-face-unlock
-        p.promo-caption Contributors
-        p.light.center(ng-if='!singleData.contributor')
-          | No Contributors Yet.
+        p.promo-caption Contributions
         a(href='kbarticle/edit/{{singleData.push_key}}') Click here to contribute
-    .col.s12.m4.l4
+    .col.s12.m6.l6
       .center.promo
-        
-        div(data-ng-if='userLikes != currentUser.uid')
+        div(data-ng-if='val != currentUser.uid')
           i.large.mdi-action-grade.mdi-likes(data-ng-click='like_counter()')
           p Click the star to like this article
-        div(data-ng-if='userLikes == currentUser.uid')
+        div(data-ng-if='val == currentUser.uid')
           i.large.mdi-action-grade(data-ng-style="{'color': 'gold'}")
           p You have already liked this article
         p.promo-caption Rates
         p.light.center
-          span.display-block {{likes || 0}} Like(s)
-    .col.s12.m4.l4
-      .center.promo
-        i.large.mdi-action-visibility
-        p.promo-caption Number of page Views
-        p.light.center
-          | Now most times you may not have people around to perform UAT for your new project, but we have helped create a platform where you can add your projects and developers or regular people would constructively criticism or praise your project.
-  .row
+          span.display-block {{length_val || 0}} Like(s)
     .container
       #disqus_thread
       noscript
