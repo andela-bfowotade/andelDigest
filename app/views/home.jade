@@ -2,13 +2,14 @@
   .container
     h3 Your Knowledge based Articles so far...
     .section(dir-paginate='userOwn in story | itemsPerPage: 9')
-      div(ng-show='!userOwn')
+    span .......
+      div(data-ng-hide='userOwn')
         h3 Hmm, you have no Articles
         a(href='/kbarticle') click
         |  here to create one, or go 
         a(href='/') here
         |  to find articles to read.
-      div(ng-show='userOwn')
+      div(data-ng-show='userOwn')
         a(ng-href='/kbarticle/{{userOwn.$id}}#top')
           h5 {{userOwn.title}}
         p {{userOwn.subtitle}}
