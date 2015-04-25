@@ -8,10 +8,11 @@ section#splash-blue
       h6.main-text Code what matters most.
       div#start-now-hero.btn.waves-effect.waves-light.yellow.darken-2.btn-2-yellow
         span.dark-grey-text #ThisIsAndela
-.row#side-nav
-  .col.s12.m3.l3.z-depth-2
-    h1
-      | Featured
+.row#side-nav.main-content
+  .col.s12.m3.l3.center
+    md-toolbar.md-primary
+      h1.md-toolbar-tools.side-home-nav
+        | Share Some Knowledge
     md-list-item.md-3-line.fx-fade-down.fx-easing-bounce.fx-speed-800(data-ng-repeat='todo in todos')
       .md-list-item-text
         h3 {{ todo.who }}
@@ -31,16 +32,14 @@ section#splash-blue
       .circle-clipper.right
         .circle
     ul.collection.grip-list
-      li.collection-item.avatar(dir-paginate='articles in kbarticles | orderBy:"-timestamp" | itemsPerPage: 10')
+      li.collection-item.avatar(dir-paginate='articles in kbarticles | orderBy:"-timestamp" | itemsPerPage: 9')
         img.circle(ng-src='{{articles.picture || "http://0.gravatar.com/avatar/"}}', alt='')
-        a(ng-href='/kbarticle/{{articles.$id}}')
+        a(ng-href='/kbarticle/{{articles.$id}}#top')
           span.title {{articles.title}}
         p
           |  {{articles.subtitle || 'The beautiful subtitle hasn\'t been born, but the knowledge is within'}}
           br
-          | By {{articles.owner || 'Stranger'}}
+          | By {{articles.owner || 'Stranger'}} | {{articles.timestamp | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
         p.secondary-content.time-ago
           | {{articles.timestamp | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
-        a(href='#!')
-          i.mdi-action-grade
     dir-pagination-controls(template-url='/lib/angular-utils-pagination/dirPagination.tpl.html')

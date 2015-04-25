@@ -2,8 +2,8 @@ angular.module('andelfire.controllers')
 .controller('MenuCtrl', ['$scope', '$mdBottomSheet',
   function($scope, $mdBottomSheet) {
     $scope.items = [
-      { name: 'Users', state:'users', icon: 'fa-users' },
-      { name: 'Logout', state:'logout', icon: 'fa-sign-out' }
+      { name: 'Likes', icon: 'fa-thumbs-up' },
+      { name: 'Title', icon: 'fa-header' }
     ];
 
     $scope.listItemClick = function($index) {

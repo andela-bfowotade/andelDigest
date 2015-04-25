@@ -37,6 +37,7 @@ angular.module('andelfire.controllers')
           toastr.error('Please Enter A valid Url');
         }
       };
+
       $scope.toggleList = function(index) {
         $scope.spliceRefence.push($scope.article.referenceUrls[index]);
         $scope.article.referenceUrls.splice(index, 1);
@@ -57,9 +58,11 @@ angular.module('andelfire.controllers')
         }
       });
 
-      $scope.last_edited_obj = {
-        by: $rootScope.currentUser.google.displayName,
-        when: new Date().getTime()
+      if ($rootScope.currentUser) {
+        $scope.last_edited_obj = {
+          by: $rootScope.currentUser.google.displayName,
+          when: new Date().getTime()
+        }
       }
 
       $scope.SaveKbArticle = function(article) {
@@ -75,18 +78,20 @@ angular.module('andelfire.controllers')
             referenceUrls: angular.copy($scope.pushReference),
             picture: $rootScope.activeUser.picture,
             last_edited: $scope.last_edited_obj,
+            uid: $rootScope.activeUser.uid,
             timestamp: new Date().getTime()
           }, function(err) {
             if (!err) {
               swal({
-                title: 'Cool!!',
-                text: 'Knowledge Article has been created. Thank you',
-                type: 'success',
-              },
+                  title: 'Cool!!',
+                  text: 'Knowledge Article has been created. Thank you',
+                  type: 'success',
+                  allowOutsideClick: false
+                },
 
-            function() {
-              $window.location = '/kbarticle/' + $scope.push_key.key();
-            });
+                function() {
+                  $window.location = '/kbarticle/' + $scope.push_key.key();
+                });
             } else {
               swal({
                 title: 'OOPS!!',

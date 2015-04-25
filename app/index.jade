@@ -12,12 +12,17 @@ html(lang="en" ng-app="AndelFire")
               img.brand-logo(src='img/andelalogo.png')
             a.button-collapse(href='#', data-activates='mobile-demo')
               i.mdi-navigation-menu
-            ul.right.hide-on-med-and-down
-              li(data-ng-if="!currentUser")
+            ul.right.hide-on-med-and-down(data-ng-if="!currentUser")
+              li
                 a(data-ng-click='login()') Login
+            ul.right.hide-on-med-and-down(data-ng-if="currentUser")
+              li
+                a(href='/home')
+                  img.circle(ng-src='{{activeUser.picture || "http://0.gravatar.com/avatar/"}}', alt='' width='42' height='42')
+                  span.name-ul  {{activeUser.known_as}}
               li
                 a(href='/kbarticle') Add KB Article
-              li(data-ng-if="currentUser")
+              li
                 a(data-ng-click='logout()') Logout
             ul#mobile-demo.side-nav
               li

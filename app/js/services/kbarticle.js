@@ -1,12 +1,12 @@
 angular.module('andelfire.services')
-  .factory('KbArticles', ['$firebase', 'Refs', '$stateParams',
-    function($firebase, Refs, $stateParams) {
+  .factory('KbArticles', ['$firebase', 'Refs', '$stateParams', '$rootScope',
+    function($firebase, Refs, $stateParams, $rootScope) {
       return {
         all: function(cb) {
           if (!cb) {
             return $firebase(Refs.kbAs).$asArray();
           } else {
-            Refs.users.once('value', function(snap) {
+            Refs.users.on('value', function(snap) {
               cb(snap.val());
             });
           }
@@ -39,6 +39,14 @@ angular.module('andelfire.services')
             Refs.kbAs.child($stateParams.kbId).child('likes').on('value', function(snap) {
               cb(snap.val());
             });
+          }
+        },
+
+        removeData: function(index,cb) {
+          if(index) {
+            Refs.kbAs.child(index).remove(cb);
+          } else {
+            return 'error occured';
           }
         }
       }

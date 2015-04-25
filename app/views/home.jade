@@ -1,4 +1,19 @@
-span.title My App
-span(flex layout="row" layout-align="end center" ng-if="currentUser")
-  md-button(ng-click="showMenu($event)" aria-label="Show Bottom Sheet")
-    i.fa.fa-ellipsis-v
+.row
+  .container
+    h3 Your Knowledge based Articles so far...
+    .section(dir-paginate='userOwn in story | itemsPerPage: 9')
+      div(ng-show='!userOwn')
+        h3 Hmm, you have no Articles
+        a(href='/kbarticle') click
+        |  here to create one, or go 
+        a(href='/') here
+        |  to find articles to read.
+      div(ng-show='userOwn')
+        a(ng-href='/kbarticle/{{userOwn.$id}}#top')
+          h5 {{userOwn.title}}
+        p {{userOwn.subtitle}}
+        span(am-time-ago='userOwn.timestamp')
+        span(flex layout="row" layout-align="end center" ng-if="currentUser")
+          i.fa.fa-trash-o(data-ng-click='toggleList($index)')
+        .divider
+      dir-pagination-controls(template-url='/lib/angular-utils-pagination/dirPagination.tpl.html')

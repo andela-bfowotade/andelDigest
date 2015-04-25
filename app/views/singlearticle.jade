@@ -1,7 +1,7 @@
 section(data-ng-controller='KbCtrl')
   md-toolbar.md-warn
     .md-toolbar-tools
-      h2.md-flex {{singleData.title}}
+      h2.md-flex#top {{singleData.title}}
   md-content(layout-padding='', style='padding: 24px;')
     .row
       .col.s12.m3.l3.singlepage-ref-link
@@ -19,7 +19,7 @@ section(data-ng-controller='KbCtrl')
         p.ref-subheader
           | Owner: 
           {{singleData.owner}}
-        img(ng-src='{{singleData.picture || "img/andel-avatar.png"}}')
+        img(ng-src='{{singleData.picture || "img/andel-avatar.png"}}' width='196' height='196')
         hr
         p
           | Last Edited by {{singleData.last_edited.by}}
@@ -35,12 +35,16 @@ section(data-ng-controller='KbCtrl')
         a(href='kbarticle/edit/{{singleData.push_key}}') Click here to contribute
     .col.s12.m6.l6
       .center.promo
-        div(data-ng-if='val != currentUser.uid')
-          i.large.mdi-action-grade.mdi-likes(data-ng-click='like_counter()')
-          p Click the star to like this article
-        div(data-ng-if='val == currentUser.uid')
-          i.large.mdi-action-grade(data-ng-style="{'color': 'gold'}")
-          p You have already liked this article
+        div(data-ng-show='!currentUser')
+          i.large.mdi-action-grade
+          p Sadly you have to be logged in to like this article
+        div(data-ng-show='currentUser')
+          div(data-ng-if='val != currentUser.uid')
+            i.large.mdi-action-grade.mdi-likes(data-ng-click='like_counter()')
+            p Click the star to like this article
+          div(data-ng-if='val == currentUser.uid')
+            i.large.mdi-action-grade(data-ng-style="{'color': 'gold'}")
+            p You have already liked this article
         p.promo-caption Rates
         p.light.center
           span.display-block {{length_val || 0}} Like(s)

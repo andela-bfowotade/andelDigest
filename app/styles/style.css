@@ -9,12 +9,20 @@
   background-repeat: no-repeat;
   background-position: right bottom;
 }
+.main-content {
+  box-sizing: content-box !important;
+  -webkit-box-sizing: content-box !important;
+}
 
 nav {
   color: #212121;
   background-color: #fff;
   width: 100%;
   line-height: 56px;
+}
+
+a:hover, a:focus {
+  color: none !important;
 }
 
 nav ul a {
@@ -101,12 +109,20 @@ nav ul a {
 pre code {
   color: #673AB7;
 }
+.prettyprint ol {
+  padding-left: 40px;
+}
 
+.prettyprint img {
+  width: 100%;
+}
 .secondary-content.time-ago {
   color: #272D4E;
 }
 .grip-list {
   border: none;
+  box-sizing: content-box !important;
+  -webkit-box-sizing: content-box !important;
 }
 .md-dialog-container {
   display: 0;
@@ -117,4 +133,9 @@ pre code {
 .mdi-likes {
   cursor: pointer;
 }
-
+md-toolbar.md-default-theme {
+  background-color: #272D4E !important;
+}
+.side-home-nav {
+  background-color: #fbc02d !important;
+}
