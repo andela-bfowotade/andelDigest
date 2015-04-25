@@ -1,14 +1,13 @@
 .row
   .container
     h3 Your Knowledge based Articles so far...
+    div(data-ng-if='story == ""')
+      h3 Hmm, you have no Articles
+      a(href='/kbarticle') click
+      |  here to create one, or go 
+      a(href='/') here
+      |  to find articles to read.
     .section(dir-paginate='userOwn in story | itemsPerPage: 9')
-    span .......
-      div(data-ng-hide='userOwn')
-        h3 Hmm, you have no Articles
-        a(href='/kbarticle') click
-        |  here to create one, or go 
-        a(href='/') here
-        |  to find articles to read.
       div(data-ng-show='userOwn')
         a(ng-href='/kbarticle/{{userOwn.$id}}#top')
           h5 {{userOwn.title}}
@@ -18,3 +17,4 @@
           i.fa.fa-trash-o(data-ng-click='toggleList($index)')
         .divider
       dir-pagination-controls(template-url='/lib/angular-utils-pagination/dirPagination.tpl.html')
+      
