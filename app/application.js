@@ -30,6 +30,7 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, error) {
       var states = (toState.name !== 'about' && toState.name !== 'landingPage' && toState.name !== 'kbarticle/id' && toState.name !== 'error_404');
       if (!Refs.root.getAuth() && states && !$location.search().token) {
+        console.log(states, 'aaa');
         event.preventDefault();
         $state.go('error_404');
       }
@@ -50,9 +51,11 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
 ]);
 
 /* application routes */
-AndelFire.config(['$stateProvider', '$locationProvider',
-  function($stateProvider, $locationProvider) {
+AndelFire.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
+  function($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode(true);
+    $urlRouterProvider.otherwise('/');
+
     $stateProvider
       .state('landingPage', {
         url: '/',
@@ -84,16 +87,6 @@ AndelFire.config(['$stateProvider', '$locationProvider',
         url: '/kbarticle/edit/:kbId',
         templateUrl: 'views/kbarticle.html',
         controller: 'KbCtrl'
-      })
-      .state('users', {
-        url: '/users',
-        templateUrl: 'views/users.html',
-        controller: 'UsersCtrl'
-      })
-      .state('users/id', {
-        url: '/users/:userId',
-        templateUrl: 'views/users.html',
-        controller: 'UsersCtrl'
       })
       .state('error_404', {
         url: '/error_404',

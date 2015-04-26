@@ -1,5 +1,4 @@
-var userRoutes = require('./users-routes'),
- articleRoutes = require('./articles-routes');
+var articleRoutes = require('./articles-routes');
 
 module.exports = function (app, config, rootRef) {
   userRoutes(app, rootRef);

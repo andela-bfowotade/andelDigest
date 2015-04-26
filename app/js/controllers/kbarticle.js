@@ -1,14 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$location', '$window',
-    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $location, $window) {
-
-      function swalAlertError() {
-        return swal({
-          title: 'OOPS!!',
-          text: 'An error occured, please try later or check your internet connection',
-          type: 'error'
-        });
-      };
+  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal',
+    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal) {
 
       $scope.articles = KbArticles.all();
       if ($stateParams.kbId) {
@@ -79,67 +71,59 @@ angular.module('andelfire.controllers')
 
         //save article details
         if (!article.push_key) {
-          swal({ //swal alert takes a function callback
-            title: "You are about to create an Article",
-            text: "Will you like to go ahead?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, create it!",
-            closeOnConfirm: true,
-            allowOutsideClick: false
-          }, function(isConfirmed) { //invoke firebase data syncs here
-            if (isConfirmed) {
+          Swal.success(
+            "You are about to create an Article",
+            "Will you like to go ahead?",
+            "Yes, create it!",
+            false,
+            function(isConfirmed) { //invoke firebase data syncs here
+              if (isConfirmed) {
 
-              $scope.push_key = Refs.kbAs.push(article, function(err) {
-                if (!err) {};
-              });
-              Refs.kbAs.child($scope.push_key.key()).update({
-                push_key: $scope.push_key.key(),
-                owner: $rootScope.activeUser.known_as,
-                referenceUrls: angular.copy($scope.pushReference),
-                picture: $rootScope.activeUser.picture,
-                last_edited: $scope.last_edited_obj,
-                uid: $rootScope.activeUser.uid,
-                timestamp: new Date().getTime()
-              }, function(err) {
-                if (err) {
-                  swalAlertError();
-                }
-              });
-              $window.location = '/kbarticle/' + $scope.push_key.key();
-            }
-          });
+                $scope.push_key = Refs.kbAs.push(article, function(err) {
+                  if (!err) {};
+                });
+                Refs.kbAs.child($scope.push_key.key()).update({
+                  push_key: $scope.push_key.key(),
+                  owner: $rootScope.activeUser.known_as,
+                  referenceUrls: angular.copy($scope.pushReference),
+                  picture: $rootScope.activeUser.picture,
+                  last_edited: $scope.last_edited_obj,
+                  uid: $rootScope.activeUser.uid,
+                  timestamp: new Date().getTime()
+                }, function(err) {
+                  if (err) {
+                    Swal.swal_error();
+                  }
+                });
+                $window.location = '/kbarticle/' + $scope.push_key.key();
+              }
+            });
         } else {
-          swal({ //swal alert takes a function callback
-            title: "You are about to edit this Article",
-            text: "Will you like to go ahead?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, edit it!",
-            closeOnConfirm: true,
-            allowOutsideClick: false
-          }, function(isConfirmed) { //invoke firebase data syncs here
-            if (isConfirmed) {
-              Refs.kbAs.child($stateParams.kbId).update(article, function(err) {
-                if (!err) {
-                  Refs.kbAs.child($stateParams.kbId).update({
-                    timestamp: new Date().getTime(),
-                    last_edited: $scope.last_edited_obj
-                  });
-                  swal({
-                    title: 'Cool!!',
-                    text: 'You have edited this article. Thank you',
-                    type: 'success'
-                  });
-                } else {
-                  swalAlertError();
-                }
-              });
-            }
-          });
-        };
+          Swal.success(
+            "You are about to edit this Article",
+            "Will you like to go ahead?",
+            "Yes, edit it!",
+            false,
+            function(isConfirmed) { //invoke firebase data syncs here
+              if (isConfirmed) {
+                Refs.kbAs.child($stateParams.kbId).update(article, function(err) {
+                  if (!err) {
+                    Refs.kbAs.child($stateParams.kbId).update({
+                      timestamp: new Date().getTime(),
+                      last_edited: $scope.last_edited_obj
+                    });
+                    swal({
+                      title: 'Cool!!',
+                      text: 'You have edited this article. Thank you',
+                      type: 'success'
+                    });
+                  } else {
+                    Swal.swal_error();
+                  }
+                });
+              }
+            });
+        }
       };
 
       $scope.showDialog = showDialog;
