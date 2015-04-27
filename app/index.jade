@@ -18,8 +18,8 @@ html(lang="en" ng-app="AndelFire")
             ul.right.hide-on-med-and-down(data-ng-if="currentUser")
               li
                 a(href='/home')
-                  img.circle(ng-src='{{activeUser.picture || "http://0.gravatar.com/avatar/"}}', alt='' width='42' height='42')
-                  span.name-ul  {{activeUser.known_as}}
+                  img.circle(ng-src='{{currentUser.google.cachedUserProfile.picture || "http://0.gravatar.com/avatar/"}}', alt='' width='42' height='42')
+                  span.name-ul  {{currentUser.google.cachedUserProfile.given_name}}
               li
                 a(href='/kbarticle') Add KB Article
               li

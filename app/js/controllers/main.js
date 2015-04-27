@@ -15,12 +15,20 @@ angular.module('andelfire.controllers')
 
       $scope.logout = function() {
         Authentication.logout();
-        $state.go('landingPage', {}, {reload: true});
+        $state.go('landingPage', {}, {
+          reload: true
+        });
       };
-
+      var tagArray = [];
 
       KbArticles.all().$loaded().then(function(data) {
         $scope.kbarticles = data;
+        _.forEach(data, function(value, key) {
+        _.forEach(value.tags, function(val, key) {
+          tagArray.push(val.category.toLowerCase());
+          $scope.sortTags = _.union(tagArray);
+        });
+      });
         $('.preloader-wrapper').hide();
 
       });
@@ -37,24 +45,17 @@ angular.module('andelfire.controllers')
         who: 'Min Li Chan',
         when: '3:08PM',
         notes: " I'll be in your neighborhood doing errands"
+      }];
+
+      $scope.defaultTags = [{
+        text: 'Angularjs'
       }, {
-        face: 'http://0.gravatar.com/avatar/',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: " I'll be in your neighborhood doing errands"
+        text: 'Ruby on Rails'
       }, {
-        face: 'http://0.gravatar.com/avatar/',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: " I'll be in your neighborhood doing errands"
+        text: 'Git Workflow'
       }, {
-        face: 'http://0.gravatar.com/avatar/',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: " I'll be in your neighborhood doing errands"
-      }, ];
+        text: 'Regulations'
+      }];
+
     }
   ]);

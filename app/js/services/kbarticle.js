@@ -40,14 +40,6 @@ angular.module('andelfire.services')
               cb(snap.val());
             });
           }
-        },
-
-        removeData: function(index,cb) {
-          if(index) {
-            Refs.kbAs.child(index).remove(cb);
-          } else {
-            return 'error occured';
-          }
         }
       }
     }

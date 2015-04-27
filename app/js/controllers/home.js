@@ -16,24 +16,29 @@ angular.module('andelfire.controllers')
       });
 
       $scope.toggleList = function(index) {
-        Swal.success(
-          "Are you sure?",
-          "You will not be able to recover this content!",
-          "Yes, delete it!",
-          false,
-          function() {
-            var onComplete = function(error) {
-              if (error) {
-                toastr.error('Sorry an error occured, please try later');
-              } else {
-                $state.go($state.current, {}, {
-                  reload: true
-                });
-              }
-            };
-            $scope.story.splice(index, 0);
-            Refs.kbAs.child($scope.story[index].$id).remove(onComplete);
-          });
+        //swal service doesn't work here for unknown reasons(fixbug)
+        swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this content!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: true,
+          allowOutsideClick: false
+        }, function() {
+          var onComplete = function(error) {
+            if (error) {
+              toastr.error('Sorry an error occured, please try later');
+            } else {
+              $state.go($state.current, {}, {
+                reload: true
+              });
+            }
+          };
+          $scope.story.splice(index, 0);
+          Refs.kbAs.child($scope.story[index].$id).remove(onComplete);
+        });
       };
     }
   ]);

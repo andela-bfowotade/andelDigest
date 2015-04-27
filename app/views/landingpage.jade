@@ -1,6 +1,6 @@
-section#splash-blue
+section
   .row
-    .col.s12.center-align
+    .col.s12.center-align#splash-blue
       h1.white-text.main-bg-text
         | The knowledge based platform
         br
@@ -11,13 +11,29 @@ section#splash-blue
 .row#side-nav.main-content
   .col.s12.m3.l3.center
     md-toolbar.md-primary
-      h1.md-toolbar-tools.side-home-nav
-        | Share Some Knowledge
+      h3.md-toolbar-tools.side-home-nav
+        | Categorized
+    md-list-item.md-3-line.fx-fade-down.fx-easing-bounce.fx-speed-800
+      .md-list-item-text
+        ul.collection
+          li.collection-item(data-ng-repeat='tags in defaultTags')
+            a(href='#') {{ tags.text }}
+    md-toolbar.md-primary
+      h3.md-toolbar-tools.side-home-nav-light-blue
+        | Top Articles 
     md-list-item.md-3-line.fx-fade-down.fx-easing-bounce.fx-speed-800(data-ng-repeat='todo in todos')
       .md-list-item-text
-        h3 {{ todo.who }}
+        p {{ todo.who }}
         p
           | Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
+    md-toolbar.md-primary
+      h3.md-toolbar-tools.side-home-nav
+        | Tags 
+    md-list-item.md-3-line.fx-fade-down.fx-easing-bounce.fx-speed-800
+      .md-list-item-text
+        ul.collection
+          li.collection-item(data-ng-repeat='tags in sortTags')
+            a(href='/search/tag/{{tags}}') {{ tags | uppercase}}
   .col.s12.m9.l9
     #main-interlude-white.interlude
       md-toolbar.md-primary
@@ -38,7 +54,7 @@ section#splash-blue
         img.circle(ng-src='{{articles.picture || "http://0.gravatar.com/avatar/"}}', alt='')
         a(ng-href='/kbarticle/{{articles.$id}}#top')
           span.title {{articles.title}}
-        p
+        p.truncate
           |  {{articles.subtitle || 'The beautiful subtitle hasn\'t been born, but the knowledge is within'}}
           br
           | By {{articles.owner || 'Stranger'}} | {{articles.timestamp | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}

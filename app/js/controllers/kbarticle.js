@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal',
-    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal) {
+  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal', '$http',
+    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal, $http) {
 
       $scope.articles = KbArticles.all();
       if ($stateParams.kbId) {
@@ -66,9 +66,7 @@ angular.module('andelfire.controllers')
         }
       };
 
-
       $scope.SaveKbArticle = function(article) {
-
         //save article details
         if (!article.push_key) {
           Swal.success(
@@ -78,7 +76,6 @@ angular.module('andelfire.controllers')
             false,
             function(isConfirmed) { //invoke firebase data syncs here
               if (isConfirmed) {
-
                 $scope.push_key = Refs.kbAs.push(article, function(err) {
                   if (!err) {};
                 });
@@ -181,6 +178,8 @@ angular.module('andelfire.controllers')
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
+
+      $scope.tags = [];
 
     }
   ]);

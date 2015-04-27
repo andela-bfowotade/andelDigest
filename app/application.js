@@ -17,6 +17,7 @@ window.AndelFire = angular.module("AndelFire", [
   'andelfire.filters',
   'angularMoment',
   'ngLoader',
+  'ngTagsInput',
   'ngFx',
   'andelfire.services',
   'ngAnimate',
@@ -87,6 +88,11 @@ AndelFire.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         url: '/kbarticle/edit/:kbId',
         templateUrl: 'views/kbarticle.html',
         controller: 'KbCtrl'
+      })
+      .state('search/tag', {
+        url: '/search/tag/:tag',
+        templateUrl: 'views/search.html',
+        controller: 'SearchCtrl'
       })
       .state('error_404', {
         url: '/error_404',
