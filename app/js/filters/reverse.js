@@ -1,4 +1,4 @@
-angular.module("andelfire.filters")
+angular.module('andelfire.filters')
  .filter('reverse', function() {
   function toArray(list) {
     var k, out = [];

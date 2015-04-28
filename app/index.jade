@@ -6,33 +6,34 @@ html(lang="en" ng-app="AndelFire")
   body
     header
       section(data-ng-controller='MainCtrl')
-        nav
-          .nav-wrapper
-            a.brand-logo(href='/')
-              img.brand-logo(src='img/andelalogo.png')
-            a.button-collapse(href='#', data-activates='mobile-demo')
-              i.mdi-navigation-menu
-            ul.right.hide-on-med-and-down(data-ng-if="!currentUser")
-              li
-                a(data-ng-click='login()') Login
-            ul.right.hide-on-med-and-down(data-ng-if="currentUser")
-              li
-                a(href='/home')
-                  img.circle(ng-src='{{currentUser.google.cachedUserProfile.picture || "http://0.gravatar.com/avatar/"}}', alt='' width='42' height='42')
-                  span.name-ul  {{currentUser.google.cachedUserProfile.given_name}}
-              li
-                a(href='/kbarticle') Add KB Article
-              li
-                a(data-ng-click='logout()') Logout
-            ul#mobile-demo.side-nav
-              li
-                a(href='/docs/main') Docs
-              li
-                a(href='/pricing') Pricing
-              li
-                a(href='/about') About
-              a#signup-mobile-navbar.waves-effect.waves-stamplay.btn-flat(href='https://editor.stamplay.com/register?utm_source=stamplay&utm_content=navbar_signup&utm_medium=website') sign up
-              a.waves-effect.waves-light.btn.white-text(href='https://editor.stamplay.com/login?utm_source=stamplay&utm_content=navbar_login&utm_medium=website') login
+        .navbar-fixed
+          nav
+            .nav-wrapper
+              a.brand-logo(href='/')
+                img.brand-logo(src='img/andelalogo.png')
+              a.button-collapse(href='#', data-activates='mobile-demo')
+                i.mdi-navigation-menu
+              ul.right.hide-on-med-and-down(data-ng-if="!currentUser")
+                li
+                  a(data-ng-click='login()') Login
+              ul.right.hide-on-med-and-down(data-ng-if="currentUser")
+                li
+                  a(href='/home')
+                    img.circle(ng-src='{{currentUser.google.cachedUserProfile.picture || "http://0.gravatar.com/avatar/"}}', alt='' width='42' height='42')
+                    span.name-ul(data-ng-bind='currentUser.google.cachedUserProfile.given_name')
+                li
+                  a(href='/kbarticle') Add KB Article
+                li
+                  a(data-ng-click='logout()') Logout
+              ul#mobile-demo.side-nav
+                li
+                  a(href='/kbarticle') Add KB Article
+                li
+                  a(href='/pricing') Pricing
+                li
+                  a(data-ng-click='logout()') Logout
+                a#signup-mobile-navbar.waves-effect.waves-stamplay.btn-flat(href='https://editor.stamplay.com/register?utm_source=stamplay&utm_content=navbar_signup&utm_medium=website') sign up
+                a.waves-effect.waves-light.btn.white-text(href='https://editor.stamplay.com/login?utm_source=stamplay&utm_content=navbar_login&utm_medium=website') login
     div(ui-view)
 
     include shared/footer

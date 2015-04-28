@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('KbCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal', '$http',
-    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal, $http) {
+  .controller('KbCtrl', ['$scope', '$stateParams', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal',
+    function($scope, $stateParams,$rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal) {
 
       $scope.articles = KbArticles.all();
       if ($stateParams.kbId) {
@@ -11,7 +11,7 @@ angular.module('andelfire.controllers')
             $scope.article = data;
           });
         });
-      };
+      }
 
       function is_valid_url(url) {
         return /^(http(s)?:\/\/)?(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url);
@@ -63,8 +63,8 @@ angular.module('andelfire.controllers')
         $scope.last_edited_obj = {
           by: $rootScope.currentUser.google.displayName,
           when: new Date().getTime()
-        }
-      };
+        };
+      }
 
       $scope.SaveKbArticle = function(article) {
         //save article details
@@ -77,7 +77,7 @@ angular.module('andelfire.controllers')
             function(isConfirmed) { //invoke firebase data syncs here
               if (isConfirmed) {
                 $scope.push_key = Refs.kbAs.push(article, function(err) {
-                  if (!err) {};
+                  if (!err) {}
                 });
                 Refs.kbAs.child($scope.push_key.key()).update({
                   push_key: $scope.push_key.key(),
@@ -132,7 +132,7 @@ angular.module('andelfire.controllers')
 
           scope.closeDialog = function() {
             $mdDialog.hide();
-          }
+          };
         }
         $mdDialog.show({
           parent: parentEl,
@@ -144,7 +144,7 @@ angular.module('andelfire.controllers')
           controller: DialogController
         });
 
-      };
+      }
 
       $scope.like_counter = function() {
         KbArticles.updateLikes({
@@ -161,7 +161,7 @@ angular.module('andelfire.controllers')
       KbArticles.getArticleLikes($stateParams.kbId, function(data) {
         if (data) {
           _.forEach(data, function(val, key) {
-            $scope.val = val.uid;
+            $scope.fetchLikeOnArticle = val.uid;
             $scope.length_val = _.toArray(data).length;
           });
         }

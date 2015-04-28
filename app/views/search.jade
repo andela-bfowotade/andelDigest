@@ -1,6 +1,8 @@
 .row
   .container
-    Your search
+    md-toolbar.md-warn
+      md-toolbar-tools.md-flex
+        h4 Your search
     .section(dir-paginate='details in loadTagArticles | itemsPerPage: 9')
       h5 {{details.title}}
       p {{details.subtitle}}

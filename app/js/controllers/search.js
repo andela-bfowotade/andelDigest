@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('SearchCtrl', ['$scope', '$stateParams', 'Users', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal', '$http',
-    function($scope, $stateParams, Users, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal, $http) {
+  .controller('SearchCtrl', ['$scope', '$stateParams', '$rootScope', 'KbArticles', '$timeout', 'Swal', '$http',
+    function($scope, $stateParams, $rootScope, KbArticles, $timeout, Swal, $http) {
 
       if ($stateParams.tag) {
 

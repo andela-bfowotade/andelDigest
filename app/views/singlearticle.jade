@@ -39,12 +39,16 @@ section(data-ng-controller='KbCtrl')
           i.large.mdi-action-grade
           p Sadly you have to be logged in to like this article
         div(data-ng-show='currentUser')
-          div(data-ng-if='val != currentUser.uid')
-            i.large.mdi-action-grade.mdi-likes(data-ng-click='like_counter()')
-            p Click the star to like this article
-          div(data-ng-if='val == currentUser.uid')
-            i.large.mdi-action-grade(data-ng-style="{'color': 'gold'}")
-            p You have already liked this article
+          div(data-ng-if='singleData.uid !== currentUser.uid')
+            div(data-ng-if='fetchLikeOnArticle !== currentUser.uid')
+              i.large.mdi-action-grade.mdi-likes(data-ng-click='like_counter()')
+              p Click the star to like this article
+            div(data-ng-if='fetchLikeOnArticle == currentUser.uid')
+              i.large.mdi-action-grade(data-ng-style="{'color': 'gold'}")
+              p You have already liked this article
+          div(data-ng-if='singleData.uid == currentUser.uid')
+              i.large.mdi-action-grade.mdi-likes
+              p Someone else would like your article. chill
         p.promo-caption Rates
         p.light.center
           span.display-block {{length_val || 0}} Like(s)

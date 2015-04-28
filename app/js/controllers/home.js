@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('HomeCtrl', ['$scope', '$state', '$mdBottomSheet', 'Authentication', 'toastr', 'KbArticles', '$rootScope', 'Refs', '$timeout', 'blockUI', 'Swal',
-    function($scope, $state, $mdBottomSheet, Authentication, toastr, KbArticles, $rootScope, Refs, $timeout, blockUI, Swal) {
+  .controller('HomeCtrl', ['$scope', '$state', 'toastr', 'KbArticles', '$rootScope', 'Refs', '$timeout', 'blockUI', 'Swal',
+    function($scope, $state, toastr, KbArticles, $rootScope, Refs, $timeout, blockUI, Swal) {
 
       blockUI.start();
       KbArticles.all().$loaded().then(function(data) {

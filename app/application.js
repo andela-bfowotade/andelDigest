@@ -10,6 +10,7 @@ window.AndelFire = angular.module("AndelFire", [
   'ngSanitize',
   'toastr',
   'blockUI',
+  'jackrabbitsgroup.angular-infinitescroll',
   'oitozero.ngSweetAlert',
   'angularUtils.directives.dirPagination',
   'andelfire.controllers',

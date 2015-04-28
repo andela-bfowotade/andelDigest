@@ -21,16 +21,28 @@ angular.module('andelfire.controllers')
       };
       var tagArray = [];
 
-      KbArticles.all().$loaded().then(function(data) {
-        $scope.kbarticles = data;
-        _.forEach(data, function(value, key) {
-        _.forEach(value.tags, function(val, key) {
-          tagArray.push(val.category.toLowerCase());
-          $scope.sortTags = _.union(tagArray);
-        });
-      });
-        $('.preloader-wrapper').hide();
+      var options = [{
+        selector: '#staggered-test',
+        offset: 200,
+        callback: 'Materialize.showStaggeredList("#staggered-test")'
+      }, {
+        selector: '#image-test',
+        offset: 500,
+        callback: 'Materialize.fadeInImage("#image-test")'
+      }];
+      Materialize.scrollFire(options);
 
+      KbArticles.all().$loaded().then(function(data) {
+        $timeout(function() {
+          $scope.kbarticles = data;
+          _.forEach(data, function(value, key) {
+            _.forEach(value.tags, function(val, key) {
+              tagArray.push(val.category.toLowerCase());
+              $scope.sortTags = _.union(tagArray);
+            });
+          });
+        }, 0);
+        $('.preloader-wrapper').hide();
       });
 
       $scope.todos = [{
