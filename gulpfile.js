@@ -116,7 +116,8 @@ gulp.task('test:e2e',function(cb) {
 });
 
 gulp.task('build', ['bower', 'del:scripts', 'scripts', 'jade', 'less', 'static-files', 'browser-sync']);
+gulp.task('heroku:build', ['bower', 'del:scripts', 'scripts', 'jade', 'less', 'static-files']);
 gulp.task('production', ['nodemon','build']);
 gulp.task('default', ['nodemon', 'build', 'watch']);
-gulp.task('heroku:production', ['build']);
+gulp.task('heroku:production', ['heroku:build']);
 gulp.task('test', ['test:client','test:server']);
