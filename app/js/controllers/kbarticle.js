@@ -1,6 +1,6 @@
 angular.module('andelfire.controllers')
-  .controller('KbCtrl', ['$scope', '$stateParams', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal',
-    function($scope, $stateParams,$rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal) {
+  .controller('KbCtrl', ['$scope', '$stateParams', '$rootScope', 'Refs', 'KbArticles', 'toastr', '$timeout', '$mdDialog', '$window', 'Swal', '$q',
+    function($scope, $stateParams, $rootScope, Refs, KbArticles, toastr, $timeout, $mdDialog, $window, Swal, $q) {
 
       $scope.articles = KbArticles.all();
       if ($stateParams.kbId) {
@@ -16,6 +16,20 @@ angular.module('andelfire.controllers')
       function is_valid_url(url) {
         return /^(http(s)?:\/\/)?(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url);
       }
+
+      $scope.loadTags = function(query) {
+        query = query.toLowerCase();
+        var deferred = $q.defer();
+
+        _.forEach($scope.articles, function(newVal, key) {
+          $scope.fetchTags = newVal;
+        });
+        var filtered_tag = $scope.fetchTags.tags.filter(function(tag) {
+          return tag.category.toLowerCase().indexOf(query) > -1;
+        });
+        deferred.resolve(filtered_tag);
+        return deferred.promise;
+      };
 
       $scope.pushReference = [];
       $scope.spliceRefence = [];

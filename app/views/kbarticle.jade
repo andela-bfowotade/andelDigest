@@ -53,6 +53,7 @@ section
                       i.mdi-maps-local-library.left
             .input-field.col.s12.l12.m12
               tags-input(ng-model='article.tags', ng-trim='false', name='tag', display-property='category', allowed-tags-pattern='^[A-Z, a-z]+$',  add-on-comma='true' add-on-blur='false', add-on-space='true', min-tags='1' max-tags='5' allow-leftover-text='false')
+                auto-complete(source='loadTags($query)')
           a#start-now-hero.btn.waves-effect.waves-light.yellow.darken-2.btn-2-yellow(ng-disabled="articleForm.$invalid" ng-click='SaveKbArticle(article)')
             span.dark-grey-text Submit Guide
     .col.s12.m6.l6.markdown-col
