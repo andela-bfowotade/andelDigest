@@ -8,7 +8,7 @@
     "npm": "1.4.23"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "test": "gulp test",
     "postinstall": "gulp default"
   },
