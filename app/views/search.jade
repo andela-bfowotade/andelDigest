@@ -4,7 +4,8 @@
       md-toolbar-tools.md-flex
         h4 Your search
     .section(dir-paginate='details in loadTagArticles | itemsPerPage: 9')
-      h5 {{details.title}}
+      a(ng-href='/kbarticle/{{details.$id}}#top')
+        h5 {{details.title}}
       p {{details.subtitle}}
       span(am-time-ago='details.timestamp')
       span(flex layout="row" layout-align="end center" ng-if="currentUser")

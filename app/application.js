@@ -30,9 +30,8 @@ AndelFire.run(['$rootScope', '$state', 'Authentication', 'Refs', 'Toast', '$loca
     $rootScope._ = window._;
     $rootScope.moment = window.moment;
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams, error) {
-      var states = (toState.name !== 'about' && toState.name !== 'landingPage' && toState.name !== 'kbarticle/id' && toState.name !== 'error_404');
+      var states = (toState.name !== 'about' && toState.name !== 'landingPage' && toState.name !== 'search/tag' && toState.name !== 'kbarticle/id' && toState.name !== 'error_404');
       if (!Refs.root.getAuth() && states && !$location.search().token) {
-        console.log(states, 'aaa');
         event.preventDefault();
         $state.go('error_404');
       }
